@@ -1,16 +1,13 @@
 language: csharp
 solution: $SolutionName
 
-install:
-  - nuget restore -source "$Private_Nuget_Url_Repo;https://www.nuget.org/api/v2" -Verbosity detailed
-
 script:
   # Refreshing Version
   - chmod +x ./Scripts/IncrementVersion.sh
   - ./Scripts/IncrementVersion.sh
 
   # Building Project
-  - xbuild /p:Configuration=Release $SolutionName /p:TargetFrameworkVersion="v4.5" 
+  - xbuild /p:Configuration=Release $SolutionName /p:TargetFrameworkVersion="v4.5"
 
 after_success:
   # Deploying Nuget
