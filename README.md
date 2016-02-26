@@ -50,8 +50,7 @@ Instructions
         </dependencies> 
     </metadata>
     <files>
-        <file src="ProjectName\bin\Release\ProjectName.dll" target="lib" /> 
-        <file src="ProjectName\bin\Release\ProjectName.pdb" target="lib" /> 
+        <file src="ProjectName\bin\Release\ProjectName.dll" target="lib" />
     </files>
 </package>
 ```
@@ -75,11 +74,39 @@ git push origin master
 7) Login in [Travis CI](https://travis-ci.org/) with GitHub credentials. (allow it to access your repositories)
 
 8) Add Repository to Travis CI and then go into settings.
-![image](ReadMe_Images/AddRepositoryToAppVeyor.gif)
+![image](ReadMe_Images/AddRepositoryToTravis-CI.png)
 
-9)
+9) Set switches as shown on a screenshot below. Also set variables with appropriate to your project values.
+![image](ReadMe_Images/VariableSetup.PNG)
 
-Note: If your build fails look through the generated log file. Usually errors are self-explanatory.
+ Variable       | Value           | IsVisible |
+|:------------- |:-------------:| ----- |
+| ProjectName    | YourProjectName | Yes |
+| AssemblyFilePath | YourProjectName/Properties/AssemblyInfo.cs      |    Yes |
+| Is_Uploading_Nuget_To_Private_Server     | True      |   Yes |
+| Private_Nuget_Server_Repo_URL | XXXXXXXXX      |    No |
+| Private_Nuget_Server_URL | XXXXXXXXX      |    No |
+| Private_Nuget_API_Key | XXXXXXXXX      |    No |
+| Is_Uploading_Nuget_To_Public_Serever | False      |    Yes |
+| Public_Nuget_API_Key | XXXXXXXXX      |    No |
+
+- Private_Nuget_Server_Repo_URL: Url where NuGet packages can be downloaded from.
+- Private_Nuget_Server_URL: Url where NuGet packages can be uploaded to.
+
+10) Modify something and push it to your repository. (This will start a new build.)
+![image](ReadMe_Images/BuildStarted.PNG)
+
+11)  If everything has been setup correctly your build succeeds and your NuGet gets published. Congratulations! 
+
+![image](ReadMe_Images/BuildSucceeded.PNG)
+
+
+Note:
+- All future build versions (major and minor) should only be adjusted in AssemblyInfo.cs. Build number is set by Travis-CI automatically.
+- Status "Pass" doesn't guarantee successful deployment of the NuGet package
+- If your build fails look through the generated log file. Usually errors are self-explanatory.
+
+
 
 
 Credits
