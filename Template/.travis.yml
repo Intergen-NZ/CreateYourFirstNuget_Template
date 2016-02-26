@@ -2,6 +2,7 @@ language: csharp
 solution: $ProjectName.sln
 
 install:
+  - nuget restore -source "$Private_Nuget_Server_Repo_URL;https://www.nuget.org/api/v2" -Verbosity quiet
 
 script:
   # Refreshing Version
