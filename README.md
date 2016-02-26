@@ -74,7 +74,8 @@ git push origin master
 7) Login in [Travis CI](https://travis-ci.org/) with GitHub credentials. (allow it to access your repositories)
 
 8) Add Repository to Travis CI and then go into settings.
-![image](ReadMe_Images/AddRepositoryToTravis-CI.png)
+![image](ReadMe_Images/AddRepositoryToTravis-CI.PNG)
+
 
 9) Set switches as shown on a screenshot below. Also set variables with appropriate to your project values.
 ![image](ReadMe_Images/VariableSetup.PNG)
