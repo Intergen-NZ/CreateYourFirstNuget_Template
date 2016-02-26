@@ -1,0 +1,17 @@
+language: csharp
+solution: $ProjectName.sln
+
+install:
+
+script:
+  # Refreshing Version
+  - chmod +x ./Scripts/IncrementVersion.sh
+  - ./Scripts/IncrementVersion.sh
+
+  # Building Project
+  - xbuild /p:Configuration=Release $ProjectName.sln /p:TargetFrameworkVersion="v4.5" 
+
+after_success:
+  # Deploying Nuget
+  - chmod +x ./Scripts/DeployingNuget.sh
+  - ./Scripts/DeployingNuget.sh
