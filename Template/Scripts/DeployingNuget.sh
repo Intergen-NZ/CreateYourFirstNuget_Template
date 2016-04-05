@@ -13,12 +13,12 @@ fi
 
 nuget pack $ProjectName.nuspec
 
-if [[ ${Is_Uploading_Nuget_To_Private_Server,,} == "true" ]]; then 
+if [[ ${IsUploadingNugetToPrivateServer,,} == "true" ]]; then 
 		echo "Deploying to private hosting server" 
-		nuget push ./*.nupkg -s $Private_Nuget_Server_URL $Private_Nuget_API_Key
+		nuget push ./*.nupkg -s $PrivateNugetServerURL $PrivateNugetAPIKey
 fi
 
-if [[ ${Is_Uploading_Nuget_To_Public_Server,,} == "true" ]]; then 
+if [[ ${IsUploadingNugetToPublicServer,,} == "true" ]]; then 
 		echo "Deploying to public hosting server" 
-		nuget push ./*.nupkg $Public_Nuget_API_Key
+		nuget push ./*.nupkg $PublicNugetAPIKey
 fi
