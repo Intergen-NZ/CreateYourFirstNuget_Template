@@ -15,25 +15,33 @@ Why should I use this template?
 	* possibility to automate test runs before each build and much more.
 
 
+Usage
+--------
+This setup will always deploy when a new commit is made to the master branch. It is important to maintain a good branching model.
+    - Restrict master branch to only be modified by pull requests.
+    - Maintain a develop branch for new features.
+    - Use short lived feature, hotfix and release branches as appropriate.
+
+
 Instructions
 -----	
-1) Create “Class Library” in Visual Studio and add the code you want to be in your library.
+1) Create a “Class Library” in Visual Studio and add the code you want to be in your library. There should be one solution with one project for each NuGet package, and both should bear the same name (eg. Project.sln and Project.csproj).
 
-2) Copy the following from Template folder to root folder of your project:
+2) Copy the following from Template folder to your solution folder:
 - Folder: "Scripts"
 - Files: ”.gitignore”, “.travis.yml” , “LICENCE”, “README.md” 
 	
 3) Create new empty repository on github. Note repository’s URL for the next couple steps.
 
-4) Create YourProjectName.nuspec file in the root folder and add the following:
+4) Create YourProjectName.nuspec file in the solution:
 
 ```xml
 <?xml version="1.0"?>
 <package>
     <metadata>
         <!-- The unique identifier for the package. This is the package name that is shown when packages are listed using the Package Manager Console. These are also used when installing a package using the Install-Package command within the Package Manager Console. Package IDs may not contain any spaces or characters that are invalid in an URL. In general, they follow the same rules as .NET namespaces do. So Foo.Bar is a valid ID, Foo! and Foo Bar are not. -->
-        <id>ProjectName</id>
-        <version></version>
+        <id>Unique.Project.Id</id>
+        <version></version> <!-- Leave blank, automatically fetched from assemble file -->
         <title>Project Name</title>
         <authors>First name Last name</authors>
         <owners>Intergen Ltd</owners>
@@ -50,12 +58,11 @@ Instructions
         </dependencies> 
     </metadata>
     <files>
-        <file src="ProjectName\bin\Release\ProjectName.dll" target="lib" />
+        <file src="ProjectName/bin/Release/ProjectName.dll" target="lib" />
     </files>
 </package>
 ```
 5) Replace information in xml tags with project specific one.
-- Leave version tag empty. Version will be taken from AssemblyInfo.cs file.
 - Add dependencies if your project requires them, otherwise comment out dependency tag. 
   You can find dependencies in “packages.config”. 
 - Make sure to read Licence file and sign it at the end (line 189) or pick a licence that suits your needs.
@@ -80,19 +87,28 @@ git push origin master
 9) Set switches as shown on a screenshot below. Also set variables with appropriate to your project values.
 ![image](ReadMe_Images/VariableSetup.PNG)
 
+Set these if hosting on a private nuget server
+
  Variable       | Value           | IsVisible |
 |:------------- |:-------------:| ----- |
 | ProjectName    | YourProjectName | Yes |
 | AssemblyFilePath | YourProjectName/Properties/AssemblyInfo.cs      |    Yes |
-| Is_Uploading_Nuget_To_Private_Server     | True      |   Yes |
-| Private_Nuget_Server_Repo_URL | XXXXXXXXX      |    No |
-| Private_Nuget_Server_URL | XXXXXXXXX      |    No |
-| Private_Nuget_API_Key | XXXXXXXXX      |    No |
-| Is_Uploading_Nuget_To_Public_Serever | False      |    Yes |
-| Public_Nuget_API_Key | XXXXXXXXX      |    No |
+| IsUploadingNugetToPrivateServer     | True      |   Yes |
+| PrivateNugetServerRepoURL | XXXXXXXXX      |    No |
+| PrivateNugetServerRL | XXXXXXXXX      |    No |
+| PrivateNugetAPIKey | XXXXXXXXX      |    No |
 
-- Private_Nuget_Server_Repo_URL: Url where NuGet packages can be downloaded from.
-- Private_Nuget_Server_URL: Url where NuGet packages can be uploaded to.
+- PrivateNugetServerRepoURL: Url where NuGet packages can be downloaded from.
+- PrivateNugetServerURL: Url where NuGet packages can be uploaded to.
+
+Set these if hosting on Nuget.org
+
+ Variable       | Value           | IsVisible |
+|:------------- |:-------------:| ----- |
+| ProjectName    | YourProjectName | Yes |
+| AssemblyFilePath | YourProjectName/Properties/AssemblyInfo.cs      |    Yes |
+| IsUploadingNugetToPublicServer | True       |    Yes |
+| PublicNugetAPIKey | XXXXXXXXX      |    No |
 
 10) Modify something and push it to your repository. (This will start a new build.)
 ![image](ReadMe_Images/BuildStarted.PNG)
@@ -106,8 +122,6 @@ Note:
 - All future build versions (major and minor) should only be adjusted in AssemblyInfo.cs. Build number is set by Travis-CI automatically.
 - Status "Pass" doesn't guarantee successful deployment of the NuGet package
 - If your build fails look through the generated log file. Usually errors are self-explanatory.
-
-
 
 
 Credits
